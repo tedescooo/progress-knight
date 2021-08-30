@@ -1015,6 +1015,7 @@ function autoPromote() {
 function autoBuy() {
     if (!autoBuyElement.checked) return
 
+    // Clear current items list
     gameData.currentMisc = []
 
     // Auto buy properties
@@ -1029,13 +1030,37 @@ function autoBuy() {
     })
 
     // Auto buy items
+    var currentJob = gameData.currentJob.name
     var items = []
     itemCategories["Misc"].forEach(item => items.push(gameData.itemData[item]))
     items.sort()
 
     items.forEach(item => {
         if (getNet() >= item.getExpense())
-            gameData.currentMisc.push(item)
+            switch (item.baseData.description) {
+                case "Farm upgrade":
+                  if (currentJob == "Farmer")
+                    gameData.currentMisc.push(item)
+                    break
+                case "Fishing upgrade":
+                  if (currentJob == "Fisherman")
+                    gameData.currentMisc.push(item)
+                    break
+                case "Mining upgrade":
+                  if (currentJob == "Miner")
+                    gameData.currentMisc.push(item)
+                    break
+                case "Blacksmith upgrade":
+                  if (currentJob == "Blacksmith")
+                    gameData.currentMisc.push(item)
+                    break
+                case "Merchant upgrade":
+                  if (currentJob == "Merchant")
+                    gameData.currentMisc.push(item)
+                    break
+                default:
+                  gameData.currentMisc.push(item)
+            }
     })
 }
 
@@ -1414,7 +1439,7 @@ gameData.requirements = {
     "Rebirth note 3": new AgeRequirement([document.getElementById("rebirthNote3")], [{requirement: 200}]),
     "Evil info": new EvilRequirement([document.getElementById("evilInfo")], [{requirement: 1}]),
     "Time warping info": new TaskRequirement([document.getElementById("timeWarping")], [{task: "Mage", requirement: 10}]),
-    "Automation": new AgeRequirement([document.getElementById("automation")], [{requirement: 0}]),
+    "Automation": new AgeRequirement([document.getElementById("automation")], [{requirement: 1}]),
     "Quick task display": new AgeRequirement([document.getElementById("quickTaskDisplay")], [{requirement: 20}]),
 
     //Common work
