@@ -1414,7 +1414,7 @@ gameData.requirements = {
     "Rebirth note 3": new AgeRequirement([document.getElementById("rebirthNote3")], [{requirement: 200}]),
     "Evil info": new EvilRequirement([document.getElementById("evilInfo")], [{requirement: 1}]),
     "Time warping info": new TaskRequirement([document.getElementById("timeWarping")], [{task: "Mage", requirement: 10}]),
-    "Automation": new AgeRequirement([document.getElementById("automation")], [{requirement: 20}]),
+    "Automation": new AgeRequirement([document.getElementById("automation")], [{requirement: 0}]),
     "Quick task display": new AgeRequirement([document.getElementById("quickTaskDisplay")], [{requirement: 20}]),
 
     //Common work
