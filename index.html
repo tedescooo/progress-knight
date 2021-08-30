@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="css/styles.css">
     <link rel="stylesheet" type="text/css" href="css/dark.css">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> 
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <title>Progress Knight Reborn</title>
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-VSEZNYTL4N"></script>
@@ -15,10 +15,10 @@
 
         gtag('config', 'G-VSEZNYTL4N');
     </script>
-    
+
 </head>
 <body id="body" class="dark">
-    <div class="w3-margin"> 
+    <div class="w3-margin">
         <h1>Progress Knight - Reborn</h1>
         <div style="width: 1220px; height: 600px">
 
@@ -31,7 +31,7 @@
 
                 <div class="" style="font-size: large">Age <span id="ageDisplay">14</span> Day <span id="dayDisplay">0</span></div>
                 <div class="sidebar-element" style="color: gray">Lifespan: <span id="lifespanDisplay">70</span> years</div>
-                
+
                 <button id="pauseButton" class="w3-button button sidebar-element" onClick="setPause()">Pause</button>
 
                 <span id="automation" class="inline" style="margin-left: 8px">
@@ -43,6 +43,11 @@
                     <span>
                         <div class="inline">Auto-learn</div>
                         <input type="checkbox" class="inline sidebar-element" id="autoLearn">
+                    </span>
+                    </br>
+                    <span>
+                        <div class="inline">Auto-buy</div>
+                        <input type="checkbox" class="inline sidebar-element" id="autoBuy">
                     </span>
                 </span>
 
@@ -84,7 +89,7 @@
 
                     <div style="width: 230px" class="small-margin skill progress-bar progressBar">
                         <div class="progress-fill progressFill" style="background-color:rgb(225, 165, 0)"></div>
-                        <div class="progress-text name">Task</div>              
+                        <div class="progress-text name">Task</div>
                     </div>
                     <div class="sidebar-element" style="color: gray">Current skill</div>
                 </span>
@@ -101,7 +106,7 @@
                 <span id="scheduling">
                     <div style="font-size: large">Scheduling</div>
                     <div style="color: gray" class="sidebar-element">Schedule time to jobs/skills</div>
-                    <span style="height: 30px"> 
+                    <span style="height: 30px">
                         <p style="width: 5px">Jobs</br>(32%)</p>
                         <input id="schedulingSlider" class="slider" type="range" min="0" max="100" value="0">
                         <p style="width: 5px">Skills</br>(68%)</p>
@@ -115,7 +120,7 @@
                     <button id="timeWarpingButton" class="w3-button button sidebar-element" style="margin-top: 5px; width:150px" onClick="setTimeWarping()">Enable warp</button>
                 </span>
             </div> <!-- End left-hand summary panel -->
-            
+
             <!--******* Nav-bar with tabbed content navigation buttons *******-->
             <div class="panel w3-margin-left" style="width: 900px; height: 40px; float: left">
                 <div class="w3-button w3-bar-item tabButton" id="jobTabButton" onClick="setTab(this, 'jobs')">Jobs</div>
@@ -178,12 +183,12 @@
                 <template class="rowItemTemplate">
                     <tr>
                         <td>
-                            
+
                             <button class="button item-button tooltip">
                                 <span class="name"></span>
                                 <span class="tooltipText">tooltip</span>
                             </button>
-                            
+
                         </td>
                         <td>
                             <div class="w3-border w3-circle" style="width: 40px; height: 40px; padding: 7px">
@@ -202,7 +207,7 @@
 
                 <template class="requiredRowTemplate">
                     <td class="w3-text-gray" style="padding-left: 16px" colspan=5>
-                        Required: 
+                        Required:
                         <span class="value" colspan=5>
                             <span class="levels"></span>
                             <span class="coins">
@@ -213,7 +218,7 @@
                             </span>
                             <span style="color: rgb(200, 0, 0)" class="evil"></span>
                         </span>
-                    </td> 
+                    </td>
                 </template>
 
                 <div class="tab" id="jobs">
@@ -283,7 +288,7 @@
                             <h2>Import/export save</h2>
                             <button class="w3-button button" onClick="importGameData()">Import</button>
                             <button class="w3-button button" onClick="exportGameData()">Export</button>
-                            <form style="margin-top: 16px"> 
+                            <form style="margin-top: 16px">
                                 <input id="importExportBox" type="text" style="width:300px; height:30px"></input>
                             </form>
                         </li>

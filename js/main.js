@@ -23,6 +23,7 @@ var skillWithLowestMaxXp = null
 
 const autoPromoteElement = document.getElementById("autoPromote")
 const autoLearnElement = document.getElementById("autoLearn")
+const autoBuyElement = document.getElementById("autoBuy")
 
 const updateSpeed = 20
 
@@ -68,11 +69,11 @@ const jobBaseData = {
     "Illustrious Chairman": {name: "Illustrious Chairman", maxXp: 7000000000000, income: 1500000},
 
     "Junior Caretaker": {name: "Junior Caretaker", maxXp: 100000, income: 15},
-    "Lead Caretaker": {name: "Lead Caretaker", maxXp: 1000000, income: 115}, 
-    "Freshman": {name: "Freshman", maxXp: 2000000, income: 250}, 
-    "Sophomore": {name: "Sophomore", maxXp: 4000000, income: 500}, 
-    "Junior": {name: "Junior", maxXp: 16000000, income: 1000}, 
-    "Senior": {name: "Senior", maxXp: 64000000, income: 2000}, 
+    "Lead Caretaker": {name: "Lead Caretaker", maxXp: 1000000, income: 115},
+    "Freshman": {name: "Freshman", maxXp: 2000000, income: 250},
+    "Sophomore": {name: "Sophomore", maxXp: 4000000, income: 500},
+    "Junior": {name: "Junior", maxXp: 16000000, income: 1000},
+    "Senior": {name: "Senior", maxXp: 64000000, income: 2000},
     "Probation": {name: "Probation", maxXp: 300000000, income: 12000},
 
     "Baronet": {name: "Baronet", maxXp: 7500000, income: 3500},
@@ -102,7 +103,7 @@ const skillBaseData = {
     "Strength": {name: "Strength", maxXp: 100, effect: 0.01, description: "Military pay"},
     "Battle tactics": {name: "Battle tactics", maxXp: 100, effect: 0.01, description: "Military xp"},
     "Muscle memory": {name: "Muscle memory", maxXp: 100, effect: 0.01, description: "Strength xp"},
-    
+
     //Magic
     "Mana control": {name: "Mana control", maxXp: 100, effect: baseEffect, description: "T.A.A. xp"},
     "Immortality": {name: "Immortality", maxXp: 100, effect: 0.01, description: "Longer lifespan"},
@@ -126,7 +127,7 @@ const skillBaseData = {
     "Blood meditation": {name: "Blood meditation", maxXp: 100, effect: 0.01, description: "Evil gain"},
     "Demon's wealth": {name: "Demon's wealth", maxXp: 100, effect: 0.002, description: "Job pay"},
 
-    
+
 }
 
 const itemBaseData = {
@@ -176,13 +177,13 @@ const skillCategories = {
     "Magic"                  :    ["Mana control", "Immortality", "Time warping", "Super immortality"],
     "Mind"                   :    ["Novel Knowledge", "Unusual Insight", "Trade Psychology", "Flow", "Magical Engineering", "Scales Of Thought", "Magical Biology"],
     "Dark magic"             :    ["Dark influence", "Evil control", "Intimidation", "Demon training", "Blood meditation", "Demon's wealth"],
-    
+
 }
 
 const itemCategories = {
     "Properties": ["Homeless", "Tent", "Wooden hut", "Cottage", "House", "Large house", "Small Manor", "Small palace", "Grand palace"],
     "Misc": ["Rag Clothing", "Book", "Basic Farm Tools", "Small Field", "Ox-driven Plow", "Livestock-derived Fertilizer", "Cheap Fishing Rod", "Dumbbells", "Miner's Lantern", "Crappy Anvil", "Pack Horse", "Small Shop",
-    "Weapon Outlet", "Personal squire", 
+    "Weapon Outlet", "Personal squire",
                 "Steel longsword", "Butler", "Sapphire charm", "Study desk", "Library"]
 }
 
@@ -269,8 +270,8 @@ const tooltips = {
     "Unusual Insight": "Your training in the more mundane affairs of the non-magical world have developed your critical analysis skills. As you gain knowledge, magical concepts which seemed inscrutable and mysterious are becoming more relatable to the physical world around you.",
     "Trade Psychology": "Writers pour their souls into the written word. Your extensive reading combined with your countless years spent interacting with people have lent you unparalleled insight into the way mankind views the positive and the negative events of this world. An ethical scholar would refrain from abusing this knowledge for financial gain.",
     "Flow": "Intense bouts of concentration warp your perception of time",
-    "Magical Engineering": "The potential routes of experimentation are infinite. The questions, limitless. What should a budding Chairman focus on in order to enhance their" 
-      + " knowledge of both life and magic? In medieval times, biology is limited by the tools of the time. Without microscopes and advanced chemistry, it is almost impossible" 
+    "Magical Engineering": "The potential routes of experimentation are infinite. The questions, limitless. What should a budding Chairman focus on in order to enhance their"
+      + " knowledge of both life and magic? In medieval times, biology is limited by the tools of the time. Without microscopes and advanced chemistry, it is almost impossible"
       + " to fully grasp the concept of cellular life and the underlying mechanisms governing DNA, metabolism, and degradation of biological structures. Magical Engineering is a worthy pursuit for a Chairman looking to use Magic to build the tools of future scientific inquiry.",
     "Scales Of Thought": "Up to this point, a Chairman's experience with Magic is almost entirely on the human scale. A budding apprentice learns to extend the life of a flower."
       +  " A mage learns to incinerate man, horse, and siege engine. Master Wizards learn to shake the earth and obscure the vision of their human opponents with natural phenomena"
@@ -356,7 +357,7 @@ function addMultipliers() {
             task.incomeMultipliers.push(task.getLevelMultiplier.bind(task))
             task.incomeMultipliers.push(getBindedTaskEffect("Demon's wealth"))
             task.xpMultipliers.push(getBindedTaskEffect("Productivity"))
-            task.xpMultipliers.push(getBindedItemEffect("Personal squire"))    
+            task.xpMultipliers.push(getBindedItemEffect("Personal squire"))
         } else if (task instanceof Skill) {
             task.xpMultipliers.push(getBindedTaskEffect("Concentration"))
             task.xpMultipliers.push(getBindedItemEffect("Rag Clothing"))
@@ -453,7 +454,7 @@ function setCustomEffects() {
     // for simplicity's sake. As of this writing, the two relevant skills are Time warping and Flow.
     // As of June 23rd 2021, gameSpeed effects are broken out into their respective effects and functions
     // to increase clarity for players. The old method of combining effects into Time Warping caused Flow
-    // to change the Time Warping skill description, which led to confusion. 
+    // to change the Time Warping skill description, which led to confusion.
     var timeWarping = gameData.taskData["Time warping"];
     var flow = gameData.taskData["Flow"];
     // This re-defined getEffect() function is called in the getGameSpeed() function.
@@ -469,7 +470,7 @@ function setCustomEffects() {
 
     var immortality = gameData.taskData["Immortality"]
     immortality.getEffect = function() {
-        var multiplier = 1 + getBaseLog(33, immortality.level + 1) 
+        var multiplier = 1 + getBaseLog(33, immortality.level + 1)
         return multiplier
     }
 }
@@ -515,7 +516,7 @@ function getAllTimeMultipliers() {
     var timeWarpingSpeed = gameData.timeWarpingEnabled ? timeWarping.getEffect() : 1;
     var totalTimeMultiplier = flowSpeed * timeWarpingSpeed;
     return totalTimeMultiplier;
-    
+
 }
 
 function getGameSpeed() {
@@ -526,7 +527,7 @@ function getGameSpeed() {
 function applyExpenses() {
     var coins = applySpeed(getExpense())
     gameData.coins -= coins
-    if (gameData.coins < 0) {    
+    if (gameData.coins < 0) {
         goBankrupt()
     }
 }
@@ -625,7 +626,7 @@ function createHeaderRow(templates, categoryType, categoryName) {
     headerRow.style.color = "#ffffff"
     headerRow.classList.add(removeSpaces(categoryName))
     headerRow.classList.add("headerRow")
-    
+
     return headerRow
 }
 
@@ -654,11 +655,11 @@ function createAllRows(categoryType, tableId) {
     for (categoryName in categoryType) {
         var headerRow = createHeaderRow(templates, categoryType, categoryName)
         table.appendChild(headerRow)
-        
+
         var category = categoryType[categoryName]
         category.forEach(function(name) {
             var row = createRow(templates, name, categoryName, categoryType)
-            table.appendChild(row)       
+            table.appendChild(row)
         })
 
         var requiredRow = createRequiredRow(categoryName)
@@ -683,7 +684,7 @@ function updateQuickTaskDisplay(taskType) {
 *   This function gets called three times. Once with jobs, once with skills, and once for items.
 *   Execution: this function first gathers a list of all possible required rows.
 *   It then parses through each and every possible required row.
-*   
+*
 */
 function updateRequiredRows(data, categoryType) {
     var requiredRows = document.getElementsByClassName("requiredRow")
@@ -693,8 +694,8 @@ function updateRequiredRows(data, categoryType) {
         if (category == null) {continue}
 
         // Once we have the array of items, skills or jobs through the category variable, we iterate through each item within the array
-        // with the goal of finding the next entity within the array that has not met it's requirements. 
-        // So this for loop is responsible for choosing the row we use as the required row, and is a good target for changing the logic of 
+        // with the goal of finding the next entity within the array that has not met it's requirements.
+        // So this for loop is responsible for choosing the row we use as the required row, and is a good target for changing the logic of
         // required row display.
         if(categoryType.Misc == undefined) {
             for (i = 0; i < category.length; i++) {
@@ -716,12 +717,12 @@ function updateRequiredRows(data, categoryType) {
                 if (!nextEntityRequirements.isCompleted()) {
                     nextEntity = data[nextEntityName]
                     break
-                }       
+                }
             }
     }
     //separate decision logic for nextEntity within the Shop
-    // Step one: 
-    // Step two: then we'll 
+    // Step one:
+    // Step two: then we'll
     else if (categoryType.Misc != undefined) {
         for (i = 0; i < category.length; i++) {
             var entityName = category[i]; //first we grab the name, like "Beggar" or "Rag Clothing"
@@ -731,7 +732,7 @@ function updateRequiredRows(data, categoryType) {
                 if (!requirements.isCompleted()) {
                     nextEntity = data[entityName];
                         break;
-                    
+
                 }
             }
 
@@ -743,7 +744,7 @@ function updateRequiredRows(data, categoryType) {
             if (!nextEntityRequirements.isCompleted()) {
                 nextEntity = data[nextEntityName]
                 break
-            }    
+            }
 
 
             //decision logic for setting the item to be up next, and therefore used for the required row
@@ -760,17 +761,17 @@ function updateRequiredRows(data, categoryType) {
             }  else if(requirementObject instanceof CoinRequirement && !nextEntityRequirements.isCompleted()) {
                 nextEntity = data[nextEntityName];
                 break;
-            } */ 
-            
-                  
+            } */
+
+
         }
     }
 
         //If we didn't find an object within the array that has requirements left to fulfill, we don't display any
         //required row. We do this by setting the required row to hiddenTask so it doesn't display.
         if (nextEntity == null) {
-            requiredRow.classList.add("hiddenTask")      
-        
+            requiredRow.classList.add("hiddenTask")
+
         //Otherwise, we do have an object to display a required row for. This following code is the code
         //that decides what exactly gets displayed into the requiredRow template.
         } else {
@@ -809,7 +810,7 @@ function updateRequiredRows(data, categoryType) {
                     levelElement.textContent = finalText
                 }
                 //Item requirement row display logic
-                
+
             /*
             *   So once we're here, there are two cases.
             *   The first case is a simple item with only a CoinRequirement. In this case, we use the original display logic.
@@ -817,7 +818,7 @@ function updateRequiredRows(data, categoryType) {
             *   the item's expense even though it isn't accessed through a CoinRequirement. Weird as hell. No idea how it's doing that for the
             *   items that only have TaskRequirements, unless this whole time it's actually been displaying the Task level requirement as the coin cost.
             *   I think that is what has been happening. Lmao. Oops.
-            *  
+            *
             */
             } else if (data == gameData.itemData) {
                 if(requirementObject instanceof CoinRequirement) {
@@ -836,11 +837,11 @@ function updateRequiredRows(data, categoryType) {
                     }
                     finalText = finalText.substring(0, finalText.length - 1);
                     levelElement.textContent = finalText;
-                    
+
                 }
 
             }
-        }   
+        }
     }
 }
 
@@ -1011,6 +1012,33 @@ function autoPromote() {
     if (requirement.isCompleted()) gameData.currentJob = nextEntity
 }
 
+function autoBuy() {
+    if (!autoBuyElement.checked) return
+
+    gameData.currentMisc = []
+
+    // Auto buy properties
+    var properties = []
+    itemCategories["Properties"].forEach(item => properties.push(gameData.itemData[item]))
+    properties.sort()
+
+    properties.forEach(property => {
+        if (getNet() >= property.getExpense()) {
+            gameData.currentProperty = property
+        }
+    })
+
+    // Auto buy items
+    var items = []
+    itemCategories["Misc"].forEach(item => items.push(gameData.itemData[item]))
+    items.sort()
+
+    items.forEach(item => {
+        if (getNet() >= item.getExpense())
+            gameData.currentMisc.push(item)
+    })
+}
+
 function checkSkillSkipped(skill) {
     var row = document.getElementById("row " + skill.name)
     var isSkillSkipped = row.getElementsByClassName("checkbox")[0].checked
@@ -1025,20 +1053,20 @@ function setSkillWithLowestMaxXp() {
         var requirement = gameData.requirements[skillName]
         /*
         Getting an autolearn error, and the dev console says there is an uncaught
-        TypeError at this line of code below during the requirement.isCompleted() call. 
+        TypeError at this line of code below during the requirement.isCompleted() call.
         I think the error is saying that when calling requirement.isCompleted, requirement is undefined.
         This would make sense if I have a skill that doesn't have any unlock requirements, which I think
         is true of Novel Knowledge for table rendering reasons. So the game logic assumes each skill has a requirement
-        without actually checking if requirement is non-null. 
+        without actually checking if requirement is non-null.
         */
         if (skill instanceof Skill) {
             //This check on the requirement variable is here to handle the case of a skill
-            //having no requirements. By setting requirement equal to Concentration's requirements, 
-            //we prevent unchecked TypeErrors that have been breaking the auto learn feature. 
-            
+            //having no requirements. By setting requirement equal to Concentration's requirements,
+            //we prevent unchecked TypeErrors that have been breaking the auto learn feature.
+
             // NOTE : FRAGILE FIX
             // This fix will break if the Concentration skill is either removed from the game, renamed, or the requirement is no
-            // longer immediately satisfied upon starting a new game. 
+            // longer immediately satisfied upon starting a new game.
             if(requirement == null) {
                 requirement = gameData.requirements["Concentration"];
             }
@@ -1052,7 +1080,7 @@ function setSkillWithLowestMaxXp() {
         skillWithLowestMaxXp = gameData.taskData["Concentration"]
         return
     }
-	
+
 	enabledSkills.sort((lhs, rhs) => { return lhs.getMaxXp() / lhs.getXpGain() - rhs.getMaxXp() / rhs.getXpGain() })
 
     var skillName = enabledSkills[0].name
@@ -1085,7 +1113,7 @@ function yearsToDays(years) {
     var days = years * 365
     return days
 }
- 
+
 function getDay() {
     var day = Math.floor(gameData.days - daysToYears(gameData.days) * 365)
     return day
@@ -1181,7 +1209,7 @@ function rebirthTwo() {
     for (taskName in gameData.taskData) {
         var task = gameData.taskData[taskName]
         task.maxLevel = 0
-    }    
+    }
 }
 
 function rebirthReset() {
@@ -1235,11 +1263,11 @@ function assignMethods() {
         if (task.baseData.income) {
             task.baseData = jobBaseData[task.name]
             task = Object.assign(new Job(jobBaseData[task.name]), task)
-            
+
         } else {
             task.baseData = skillBaseData[task.name]
             task = Object.assign(new Skill(skillBaseData[task.name]), task)
-        } 
+        }
         gameData.taskData[key] = task
     }
 
@@ -1333,6 +1361,7 @@ function update() {
     increaseDays()
     autoPromote()
     autoLearn()
+    autoBuy()
     doCurrentTask(gameData.currentJob)
     doCurrentTask(gameData.currentSkill)
     applyExpenses()
@@ -1361,11 +1390,11 @@ function exportGameData() {
 
 createAllRows(jobCategories, "jobTable")
 createAllRows(skillCategories, "skillTable")
-createAllRows(itemCategories, "itemTable") 
+createAllRows(itemCategories, "itemTable")
 
 createData(gameData.taskData, jobBaseData)
 createData(gameData.taskData, skillBaseData)
-createData(gameData.itemData, itemBaseData) 
+createData(gameData.itemData, itemBaseData)
 
 gameData.currentJob = gameData.taskData["Beggar"]
 gameData.currentSkill = gameData.taskData["Concentration"]
@@ -1396,7 +1425,7 @@ gameData.requirements = {
     "Blacksmith": new TaskRequirement([getTaskElement("Blacksmith")], [{task: "Strength", requirement: 30}, {task: "Miner", requirement: 10}]),
     "Merchant": new TaskRequirement([getTaskElement("Merchant")], [{task: "Bargaining", requirement: 50}, {task: "Blacksmith", requirement: 10}]),
 
-    //Military 
+    //Military
     "Squire": new TaskRequirement([getTaskElement("Squire")], [{task: "Strength", requirement: 5}]),
     "Footman": new TaskRequirement([getTaskElement("Footman")], [{task: "Strength", requirement: 20}, {task: "Squire", requirement: 10}]),
     "Veteran footman": new TaskRequirement([getTaskElement("Veteran footman")], [{task: "Battle tactics", requirement: 40}, {task: "Footman", requirement: 10}]),
@@ -1416,7 +1445,7 @@ gameData.requirements = {
     "Illustrious Chairman": new TaskRequirement([getTaskElement("Illustrious Chairman")], [{task: "Mana control", requirement: 3000}, {task: "Chairman", requirement: 1000}]),
 
     //The Order of Discovery
-    "Junior Caretaker": new TaskRequirement([getTaskElement("Junior Caretaker")], 
+    "Junior Caretaker": new TaskRequirement([getTaskElement("Junior Caretaker")],
                                             [{task: "Concentration", requirement: 200}, {task: "Meditation", requirement: 200}, {task: "Productivity", requirement: "500"}]),
     "Lead Caretaker": new TaskRequirement([getTaskElement("Lead Caretaker")], [{task: "Junior Caretaker", requirement: 10}]),
     "Freshman": new TaskRequirement([getTaskElement("Freshman")], [{task: "Lead Caretaker", requirement: 10}]),
@@ -1494,7 +1523,7 @@ gameData.requirements = {
     "Butler": new CoinRequirement([getItemElement("Butler")], [{requirement: gameData.itemData["Butler"].getExpense() * 100}]),
     "Sapphire charm": new CoinRequirement([getItemElement("Sapphire charm")], [{requirement: gameData.itemData["Sapphire charm"].getExpense() * 100}]),
     "Study desk": new CoinRequirement([getItemElement("Study desk")], [{requirement: gameData.itemData["Study desk"].getExpense() * 100}]),
-    "Library": new CoinRequirement([getItemElement("Library")], [{requirement: gameData.itemData["Library"].getExpense() * 100}]), 
+    "Library": new CoinRequirement([getItemElement("Library")], [{requirement: gameData.itemData["Library"].getExpense() * 100}]),
     "Small Field": new TaskRequirement([getItemElement("Small Field")], [{task: "Farmer", requirement: 25}]),
     "Basic Farm Tools": new TaskRequirement([getItemElement("Basic Farm Tools")], [{task: "Farmer", requirement: 10}]),
     "Cheap Fishing Rod": new TaskRequirement([getItemElement("Cheap Fishing Rod")], [{task: "Fisherman", requirement: 10}]),
